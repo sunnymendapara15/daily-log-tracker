@@ -1,0 +1,59 @@
+.employee-dashboard {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.log-form-card,
+.log-list-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  background: #f8fafc;
+}
+
+.log-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.log-form label {
+  font-weight: 600;
+  color: #475569;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.log-form input,
+.log-form textarea,
+.log-form select {
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  border: 1px solid #cbd5f5;
+  font-size: 1rem;
+}
+
+.log-form button {
+  border: none;
+  padding: 0.85rem;
+  border-radius: 0.95rem;
+  background: #10b981;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.section-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.text-btn {
+  background: none;
+  border: none;
+  color: #6366f1;
+  cursor: pointer;
+  font-weight: 600;
+}

@@ -1,0 +1,14 @@
+# Node modules
+**/node_modules
+
+# Compiled output
+frontend/build
+
+# Logs
+*.log
+
+# Environment files
+*.env
+
+# SQLite database
+backend/data

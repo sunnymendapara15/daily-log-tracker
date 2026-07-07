@@ -1,0 +1,54 @@
+.log-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.log-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 0.9rem;
+  padding: 1rem;
+  background: #fff;
+}
+
+.log-card header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  gap: 1rem;
+}
+
+.log-card header strong {
+  display: block;
+  font-size: 1.1rem;
+}
+
+.log-card header span {
+  color: #475569;
+}
+
+.log-owner {
+  text-align: right;
+  font-size: 0.85rem;
+  color: #475569;
+}
+
+.summary {
+  margin: 0.25rem 0;
+  color: #0f172a;
+}
+
+.blockers {
+  margin: 0;
+  color: #7c2d12;
+}
+
+.timestamp {
+  color: #94a3b8;
+  font-size: 0.85rem;
+}
+
+.log-list-placeholder {
+  color: #475569;
+  margin: 0;
+}
