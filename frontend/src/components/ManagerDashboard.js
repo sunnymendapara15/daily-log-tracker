@@ -2,11 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { api } from '../api/client';
 import LogList from './LogList';
 import './ManagerDashboard.css';
+import { useAuth } from '../context/AuthContext';
 
-function ManagerDashboard({ token, notify }) {
+function ManagerDashboard({ notify }) {
+  const { token } = useAuth();
   const [filters, setFilters] = useState({ date: '', employee: '' });
   const [logs, setLogs] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  if (!token) {
+    return null;
+  }
 
   const headers = { Authorization: `Bearer ${token}` };
 
@@ -20,8 +26,10 @@ function ManagerDashboard({ token, notify }) {
   };
 
   useEffect(() => {
-    fetchLogs();
-  }, []);
+    if (token) {
+      fetchLogs();
+    }
+  }, [token]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -46,7 +54,6 @@ function ManagerDashboard({ token, notify }) {
             Employee email
             <input name="employee" type="email" value={filters.employee} onChange={handleChange} placeholder="jane@example.com" />
           </label>
-          <button type="submit">Apply filters</button>
         </form>
       </section>
       <section className="log-list-card">
@@ -56,7 +63,7 @@ function ManagerDashboard({ token, notify }) {
             Refresh
           </button>
         </div>
-        <LogList logs={logs} loading={loading} showOwner />
+        <LogList logs={logs} loading={loading} showOuner />
       </section>
     </div>
   );

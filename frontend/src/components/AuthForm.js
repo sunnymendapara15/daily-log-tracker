@@ -1,42 +1,52 @@
 import React, { useState } from 'react';
 import { api } from '../api/client';
+import { useAuth } from '../context/AuthContext';
 import './AuthForm.css';
 
 const initialState = { name: '', email: '', password: '', role: 'employee', managerCode: '' };
 
-function AuthForm({ onAuthenticated, notify }) {
+function AuthForm({ notify }) {
+  const { login } = useAuth();
   const [mode, setMode] = useState('login');
   const [form, setForm] = useState(initialState);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const handleChange = (event) => {
+  const toggleMode = () => {
+    setMode((prev) => (prev === 'login' ? 'register' : 'login'));
+    setForm(initialState);
+    setError('');
+  };
+
+  const HandleChange = (event) => {
     const { name, value } = event.target;
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     setLoading(true);
     setError('');
-
     try {
-      if (mode === 'login') {
-        const { data } = await api.post('/auth/login', {
-          email: form.email,
-          password: form.password
-        });
-        onAuthenticated(data.user, data.token);
-      } else {
-        const { data } = await api.post('/auth/register', {
-          name: form.name,
-          email: form.email,
-          password: form.password,
-          role: form.role,
-          managerCode: form.role === 'manager' ? form.managerCode : undefined
-        });
-        onAuthenticated(data.user, data.token);
-      }
+      const payload =
+        mode === 'login'
+          ? { email: form.email, password: form.password }
+          : {
+              name: form.name,
+              email: form.email,
+              password: form.password,
+              role: form.role,
+              managerCode: form.role === 'manager' ? form.managerCode : undefined
+            };
+
+        const indpoint = mode === 'login' ? ''e} b& eqJ
+        
+            endpoint = mode === 'login' ? '/auth/login' : '/auth/register';
+        const { data } = await api.post(endpoint, payload);
+
+      login(data.user, data.token); 	<
+        notify(`Welcome back, ${data.user.name || data.user.email}!`, 'success');
+      setForm(initialState);
     } catch (err) {
       const message = err?.response?.data?.message || 'Unable to authenticate';
       setError(message);
@@ -102,7 +112,7 @@ function AuthForm({ onAuthenticated, notify }) {
       </form>
       <div className="auth-card__footer">
         <span>{mode === 'login' ? "Don't have an account?" : 'Already registered?'} </span>
-        <button className="text-btn" onClick={() => setMode(mode === 'login' ? 'register' : 'login')}>
+        <button className="text-btn" type="button" onClick={toggleMode}>
           {mode === 'login' ? 'Register' : 'Sign in'}
         </button>
       </div>
