@@ -18,15 +18,16 @@ function AuthForm({ notify }) {
     setError('');
   };
 
-  const HandleChange = (event) => {
+  const handleChange = (event) => {
     const { name, value } = event.target;
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
     setError('');
+
     try {
       const payload =
         mode === 'login'
@@ -39,13 +40,11 @@ function AuthForm({ notify }) {
               managerCode: form.role === 'manager' ? form.managerCode : undefined
             };
 
-        const indpoint = mode === 'login' ? ''e} b& eqJ
-        
-            endpoint = mode === 'login' ? '/auth/login' : '/auth/register';
-        const { data } = await api.post(endpoint, payload);
+      const endpoint = mode === 'login' ? '/auth/login' : '/auth/register';
+      const { data } = await api.post(endpoint, payload);
 
-      login(data.user, data.token); 	<
-        notify(`Welcome back, ${data.user.name || data.user.email}!`, 'success');
+      login(data.user, data.token);
+      notify(`Welcome back, ${data.user.name || data.user.email}!`, 'success');
       setForm(initialState);
     } catch (err) {
       const message = err?.response?.data?.message || 'Unable to authenticate';
